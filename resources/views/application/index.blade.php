@@ -107,6 +107,14 @@
                         @endisset
                     </td>
                 </tr>
+                @isset($application->public_live_key)
+                <tr>
+                    <td colspan="2">(public live key)<br/><b>{{$application->public_live_key}}</b></td>
+                    <td colspan="2">(secret live key)<br/><b>{{$application->secret_live_key}}</b></td>
+                    <td colspan="2">(public test key)<br/><b>{{$application->public_test_key}}</b></td>
+                    <td colspan="2">(secret test key)<br/><b>{{$application->secret_test_key}}</b></td>
+                </tr>
+                @endisset
             @endforeach
                 </tbody>
             </table>
