@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21b1d5a6c1277e0e3ea676eab2d737cb",
+    "content-hash": "9d8395b1074cfc7f734eec9a284f5383",
     "packages": [
         {
             "name": "brick/math",
@@ -129,6 +129,70 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
+        },
+        {
+            "name": "dcblogdev/laravel-box",
+            "version": "v2.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dcblogdev/laravel-box.git",
+                "reference": "8de77ce0d4d72f013c7dc57abf9958b488c48663"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dcblogdev/laravel-box/zipball/8de77ce0d4d72f013c7dc57abf9958b488c48663",
+                "reference": "8de77ce0d4d72f013c7dc57abf9958b488c48663",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "6.x|7.x",
+                "illuminate/support": "7.x|8.x|9.x|10.x",
+                "php": "^7.2|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Dcblogdev\\Box\\BoxServiceProvider"
+                    ],
+                    "aliases": {
+                        "Box": "Dcblogdev\\Box\\Facades\\Box"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dcblogdev\\Box\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Carr",
+                    "email": "dave@dcblog.dev",
+                    "homepage": "https://dcblog.dev"
+                }
+            ],
+            "description": "A Laravel Box package",
+            "homepage": "https://github.com/dcblogdev/laravel-box",
+            "keywords": [
+                "box",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/dcblogdev/laravel-box/issues",
+                "source": "https://github.com/dcblogdev/laravel-box/tree/v2.1.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/dcblogdev",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-03T08:44:50+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

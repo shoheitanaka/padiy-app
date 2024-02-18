@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "dcblogdev/laravel-box": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "kyslik/column-sortable": "^6.5",
         "laravel/framework": "^10.10",

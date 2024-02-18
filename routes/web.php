@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CsvImportController;
+use Dcblogdev\Box\Facades\Box;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,19 @@ require __DIR__.'/auth.php';
 
 Route::get('import-csv', [CsvImportController::class,'show'])->name('import-csv.show');
 Route::post('import-csv',  [CsvImportController::class,'import']);
+
+Route::get('box', function() {
+
+    //if no box token exists then redirect
+    Box::getAccessToken();
+
+    //box authenticated now box:: can be used freely.
+
+    //example of getting the authenticated users details
+    return Box::get('/users/me');
+
+});
+
+Route::get('box/oauth', function() {
+    return Box::connect();
+});
