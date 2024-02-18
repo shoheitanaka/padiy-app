@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\Site;
 use App\Http\Resources\ApplicationsResource;
 use App\Http\Requests\ApplicationRequest;
+use Dcblogdev\Box\Facades\Box;
 
 class ApplicationController extends Controller
 {
@@ -79,5 +80,9 @@ class ApplicationController extends Controller
     {
       $application->delete();
       return response("", 204);
+    }
+    public function send_box( $request ){
+        Box::get('users/me');
+        $file_id = 1444816744470;
     }
 }

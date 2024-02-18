@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CsvImportController;
+use App\Http\Controllers\BoxController;
+use Illuminate\Support\Facades\Route;
 use Dcblogdev\Box\Facades\Box;
 
 /*
@@ -52,3 +53,5 @@ Route::get('box', function() {
 Route::get('box/oauth', function() {
     return Box::connect();
 });
+
+Route::get('box', [BoxController::class,'index'])->name('box.index');
