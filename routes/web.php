@@ -54,4 +54,4 @@ Route::get('box/oauth', function() {
     return Box::connect();
 });
 
-Route::get('box', [BoxController::class,'index'])->name('box.index');
+//Route::get('box', [BoxController::class,'index'])->name('box.index');
