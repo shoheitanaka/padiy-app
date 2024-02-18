@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CsvImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('application', [ApplicationController::class, 'index']);
+Route::get('application', [ApplicationController::class, 'index'])->name('application.index');
 
 require __DIR__.'/auth.php';
+
+Route::get('import-csv', [CsvImportController::class,'show'])->name('import-csv.show');
+Route::post('import-csv',  [CsvImportController::class,'import']);
