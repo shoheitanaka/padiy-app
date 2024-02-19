@@ -9,6 +9,7 @@ use App\Models\Site;
 use App\Http\Resources\ApplicationsResource;
 use App\Http\Requests\ApplicationRequest;
 use Dcblogdev\Box\Facades\Box;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ApplicationController extends Controller
 {
@@ -65,7 +66,43 @@ class ApplicationController extends Controller
             'survey09' => $request->survey09,
         );
         $application = Application::create( $save_app_data );
+        // Add to Excel file
+        $file_url = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
+        $reader = IOFactory::createReader("Xlsx");
+        $set_excel = $reader->load( $file_url );
+        $sheet = $set_excel->getSheetByName('加盟店');
+        $i = 1;
+        $first = $sheet->getCell('A1')->getValue();
+        $a_cell = $sheet->getCell('A'.$i)->getValue();
+        while( !empty( $a_cell ) ){
+            $a_cell = $sheet->getCell('A'.$i)->getValue();
+            $i++;
+        }
+        $sheet->setCellValue('A'.$i-1, $application_id);
+        $unitime = time();
+        $sheet->setCellValue('B'.$i-1, date('Y/n/j H:i:s', $unitime));
+        $sheet->setCellValue('C'.$i-1, $request->trade_name);
+        $sheet->setCellValue('D'.$i-1, $request->site_name);
+        $sheet->setCellValue('E'.$i-1, $request->site_url);
+        $sheet->setCellValue('F'.$i-1, $request->email);
+        $sheet->setCellValue('G'.$i-1, $request->phone);
+        $sheet->setCellValue('H'.$i-1, $request->ceo);
+        $sheet->setCellValue('I'.$i-1, $request->ceo_kana);
+        $sheet->setCellValue('J'.$i-1, $request->ceo_birthday);
+        $sheet->setCellValue('K'.$i-1, $request->gmv_flag);
+        $sheet->setCellValue('L'.$i-1, $request->average_flag);
+        $sheet->setCellValue('M'.$i-1, $request->survey01);
+        $sheet->setCellValue('N'.$i-1, $request->survey02);
+        $sheet->setCellValue('O'.$i-1, $request->survey03);
+        $sheet->setCellValue('P'.$i-1, $request->survey04);
+        $sheet->setCellValue('Q'.$i-1, $request->survey05);
+        $sheet->setCellValue('R'.$i-1, $request->survey06);
+        $sheet->setCellValue('S'.$i-1, $request->survey07);
+        $sheet->setCellValue('T'.$i-1, $request->survey08);
+        $sheet->setCellValue('U'.$i-1, $request->survey09);
 
+        $writer = IOFactory::createWriter($set_excel, "Xlsx");;
+        $writer->save($file_url);
         return response()->json($application);
     }
 

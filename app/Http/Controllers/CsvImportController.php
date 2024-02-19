@@ -65,7 +65,10 @@ class CsvImportController extends Controller
                     }
                 }
             }
-            if(empty($error_msg))$result_msg = 'データベースに登録しました。';
+            if(empty($error_msg)){
+                $result_msg = 'データベースに登録しました。';
+
+            }
         }else{
             foreach($error_msgs as $key => $msgs){
                 $error_msg .= $key.'行目に問題があります。'."\n";
