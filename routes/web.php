@@ -49,7 +49,7 @@ Route::get( 'box', function() {
     $file_id = '1444821902061';
     $filepath = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
     $name = 'woocommerce merchant list Base.xlsx';
-    return Box::files()->uploadRevision( $file_id, $filepath, $name );
+    return Box::files()->uploadRevision( $file_id, $filepath, $name, $name );
 
     //example of getting the authenticated users details
 //    return Box::get('/users/me');
