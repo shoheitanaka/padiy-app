@@ -21,37 +21,41 @@ use Dcblogdev\Box\Facades\Box;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::group(['middleware' => 'basicauth'], function() {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 });
+
+require __DIR__.'/auth.php';
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('import-csv', [CsvImportController::class,'show'])->name('import-csv.show');
+    Route::post('import-csv',  [CsvImportController::class,'import']);
+    Route::get('application', [ApplicationController::class, 'index'])->name('application.index');
+//    Route::get('box2', [BoxController::class,'index'])->name('box.show');
 });
-Route::get('application', [ApplicationController::class, 'index'])->name('application.index');
 
-require __DIR__.'/auth.php';
-
-Route::get('import-csv', [CsvImportController::class,'show'])->name('import-csv.show');
-Route::post('import-csv',  [CsvImportController::class,'import']);
-
-Route::get('box', function() {
+Route::get( 'box', function() {
 
     //if no box token exists then redirect
     Box::getAccessToken();
 
     //box authenticated now box:: can be used freely.
+    $path = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
+    $name = 'woocommerce merchant list Base.xlsx';
+    Box::files()->upload($path, $name, $parent = 0);
+
 
     //example of getting the authenticated users details
     return Box::get('/users/me');
-
 });
-
 Route::get('box/oauth', function() {
     return Box::connect();
 });
 
-//Route::get('box', [BoxController::class,'index'])->name('box.index');
+
