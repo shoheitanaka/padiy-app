@@ -48,7 +48,7 @@ Route::get( 'box', function() {
     //box authenticated now box:: can be used freely.
     $path = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
     $name = 'woocommerce merchant list Base.xlsx';
-    Box::files()->upload($path, $name, $parent = 0);
+    Box::files()->upload( $path, $name );
 
 
     //example of getting the authenticated users details
