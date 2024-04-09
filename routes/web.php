@@ -52,7 +52,8 @@ Route::get( 'box', function() {
     Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
-    return Box::get('/users/me');
+//    return Box::get('/users/me');
+    return Box::files()->file($file_id);
 });
 Route::get('box/oauth', function() {
     return Box::connect();
