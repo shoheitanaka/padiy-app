@@ -46,7 +46,7 @@ Route::get( 'box', function() {
     Box::getAccessToken();
 
     //box authenticated now box:: can be used freely.
-    $file_id = '1444821902061';
+    $file_id = '1496375257863';
     $filepath = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
     $name = 'woocommerce_merchant_list.xlsx';
     return Box::files()->uploadRevision( $file_id, $filepath, $name );
