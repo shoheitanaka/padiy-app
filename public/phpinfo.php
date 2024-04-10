@@ -8,10 +8,12 @@ $name = 'photo.png';
 $endpoint = $file_id.'/content';
 
 $params = [
-    'attributes' => array('name' => $name, 'content_modified_at' => '2024-04-10T17:23:43-08:00'),
+    'attributes' => json_encode([
+        'name' => $name,
+        'content_modified_at' => '2024-04-10T17:26:43-08:00'
+    ]),
     'file' => new \CurlFile($filepath, mime_content_type($filepath), $name)
 ];
-
 
 $url = 'https://upload.box.com/api/2.0/files/'.$endpoint;
 $headers = ["Authorization: Bearer Fc9NgXw1RJWsB4RoaLcVP1zROO0hQi0k", "Content-Type: multipart/form-data"];
