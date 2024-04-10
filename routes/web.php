@@ -46,14 +46,15 @@ Route::get( 'box', function() {
 //    Box::getAccessToken();
 
     //box authenticated now box:: can be used freely.
-    $file_id = '1496872811898';
-    $filepath = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
-    $name = 'woocommerce_merchant_list.xlsx';
-//    return Box::files()->uploadRevision( $file_id, $filepath, $name );
+    $file_id = '1497186191662';
+    $filepath = storage_path('box_data').'/photo.png';
+    $name = 'photo.png';
+    Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
 //    return Box::get('/users/me');
-    return Box::files()->file($file_id);
+//    return Box::files()->file($file_id);
+    return $filepath;
 });
 Route::get('box/oauth', function() {
     return Box::connect();
