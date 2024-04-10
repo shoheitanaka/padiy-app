@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 //Route::apiResource('applications', ApplicationController::class);
 Route::post('applications', [ApplicationController::class, 'create']);
-//Route::get('applications', [ApplicationController::class, 'create']);
+Route::get('applications', [ApplicationController::class, 'create']);
