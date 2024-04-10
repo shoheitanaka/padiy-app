@@ -23,9 +23,11 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-$response = curl_exec($ch);
-curl_close($ch);
 echo 'TEST';
+$response = curl_exec($ch);
+echo curl_getinfo($ch);
+curl_close($ch);
+echo 'TEST2';
 echo json_decode($response, true);
 
 //echo $data;
