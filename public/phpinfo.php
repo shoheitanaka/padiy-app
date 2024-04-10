@@ -1,9 +1,9 @@
 <?php
 
 //phpinfo();
-$file_id = '1497186191662';
-$filepath = '/home/kusanagi/paidy_artws/padiy-app/storage/box_data/photo.png';
-$name = 'photo.png';
+$file_id = '1496375257863';
+$filepath = '/home/kusanagi/paidy_artws/padiy-app/storage/box_data/woocommerce_merchant_list.xlsx';
+$name = 'woocommerce_merchant_list.xlsx';
 
 $endpoint = $file_id.'/content';
 
