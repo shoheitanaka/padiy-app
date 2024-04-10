@@ -10,6 +10,7 @@ use App\Http\Resources\ApplicationsResource;
 use App\Http\Requests\ApplicationRequest;
 use Dcblogdev\Box\Facades\Box;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
@@ -27,6 +28,7 @@ class ApplicationController extends Controller
         $find_site = Site::where( 'site_url', $request->site_url )->first();
         if($find_site){
             $site_id = $find_site->id;
+            Log::debug('Check Site_id:'.$site_id);
         }else{
             $save_site_data = array(
                 'site_name' => $request->site_name,
@@ -36,6 +38,7 @@ class ApplicationController extends Controller
             );
             $this_site = Site::create($save_site_data);
             $site_id = $this_site->id;
+            Log::debug('Check Site_id:'.$site_id);
         }
 
         $latest_app = Application::orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->first();
@@ -66,6 +69,7 @@ class ApplicationController extends Controller
             'survey09' => $request->survey09,
         );
         $application = Application::create( $save_app_data );
+        Log::debug('Create application.');
         // Add to Excel file
         $file_url = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
         $reader = IOFactory::createReader("Xlsx");
