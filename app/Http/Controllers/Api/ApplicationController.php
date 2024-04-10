@@ -107,7 +107,8 @@ class ApplicationController extends Controller
 
         $writer = IOFactory::createWriter($set_excel, "Xlsx");;
         $writer->save($file_url);
-        return response()->json($application);
+//        return response()->json($application);
+        return $request->site_url;
     }
 
     public function update(ApplicationRequest $request, Application $application)
