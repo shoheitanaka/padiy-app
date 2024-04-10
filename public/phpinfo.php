@@ -9,8 +9,7 @@ $endpoint = $file_id.'/content';
 
 $params = [
     'attributes' => json_encode([
-        'name' => $name,
-        'content_modified_at' => '2024-04-10T17:26:43-08:00'
+        'name' => $name
     ]),
     'file' => new \CurlFile($filepath, mime_content_type($filepath), $name)
 ];
