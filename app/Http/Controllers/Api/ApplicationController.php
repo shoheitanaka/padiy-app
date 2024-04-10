@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Log;
 class ApplicationController extends Controller
 {
     public function index() {
-        return Application::all();
+//        return Application::all();
+        return 'Index';
     }
 
     public function show(Application $application)
