@@ -26,6 +26,6 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 $response = curl_exec($ch);
 curl_close($ch);
 
-return json_decode($response, true);
+echo json_decode($response, true);
 
 //echo $data;
