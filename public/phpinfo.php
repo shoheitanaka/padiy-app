@@ -25,7 +25,7 @@ curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 $response = curl_exec($ch);
 curl_close($ch);
-
+echo 'TEST';
 echo json_decode($response, true);
 
 //echo $data;
