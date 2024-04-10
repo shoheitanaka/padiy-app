@@ -49,12 +49,12 @@ Route::get( 'box', function() {
     $file_id = '1497186191662';
     $filepath = storage_path('box_data').'/photo.png';
     $name = 'photo.png';
-    Box::files()->uploadRevision( $file_id, $filepath, $name );
+    return Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
 //    return Box::get('/users/me');
 //    return Box::files()->file($file_id);
-    return $filepath;
+//    return $filepath;
 });
 Route::get('box/oauth', function() {
     return Box::connect();
