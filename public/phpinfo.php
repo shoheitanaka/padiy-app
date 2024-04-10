@@ -14,7 +14,7 @@ $params = [
 
 
 $url = 'https://upload.box.com/api/2.0/files/'.$endpoint;
-$headers = ["Authorization: Bearer UWR82JEP4pcWnm8m9GIEgFccE6BicSkO"];
+$headers = ["Authorization: Bearer 9IbZnZdmXmn1VPFr34chaX2HKOhor3us"];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
