@@ -19,5 +19,6 @@ use Illuminate\Console\Application;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('applications', ApplicationController::class);
+//Route::apiResource('applications', ApplicationController::class);
 Route::post('applications', [ApplicationController::class, 'create']);
+//Route::get('applications', [ApplicationController::class, 'create']);
