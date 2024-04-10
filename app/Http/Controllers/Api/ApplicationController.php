@@ -16,6 +16,7 @@ class ApplicationController extends Controller
 {
     public function index() {
 //        return Application::all();
+        Log::info('Index here.');
         return 'Index';
     }
 
@@ -77,7 +78,6 @@ class ApplicationController extends Controller
         $set_excel = $reader->load( $file_url );
         $sheet = $set_excel->getSheetByName('加盟店');
         $i = 1;
-        $first = $sheet->getCell('A1')->getValue();
         $a_cell = $sheet->getCell('A'.$i)->getValue();
         while( !empty( $a_cell ) ){
             $a_cell = $sheet->getCell('A'.$i)->getValue();
@@ -108,8 +108,7 @@ class ApplicationController extends Controller
 
         $writer = IOFactory::createWriter($set_excel, "Xlsx");;
         $writer->save($file_url);
-//        return response()->json($application);
-        return $request->site_url;
+        return response()->json($application);
     }
 
     public function update(ApplicationRequest $request, Application $application)
@@ -123,9 +122,5 @@ class ApplicationController extends Controller
     {
       $application->delete();
       return response("", 204);
-    }
-    public function send_box( $request ){
-        Box::get('users/me');
-        $file_id = 1444816744470;
     }
 }
