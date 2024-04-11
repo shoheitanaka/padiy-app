@@ -4,5 +4,8 @@
             BOX
         </h2>
     </x-slot>
-    <div>TEST</div>
+    @if($result_msg)
+    <div class="mt-4 p-8 bg-success w-full rouded-2xl text-xl" style="color:#000">{{$result_msg}}</div>
+    @endif
+
 </x-app-layout>

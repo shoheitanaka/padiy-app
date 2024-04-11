@@ -49,10 +49,16 @@ Route::get( 'box', function() {
     $file_id = '1496375257863';
     $filepath = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
     $name = 'woocommerce_merchant_list.xlsx';
-//    return Box::files()->uploadRevision( $file_id, $filepath, $name );
+    $result = Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
-    return Box::get('/users/me');
+    if(json_validate($result)){
+        $reresult_msg = 'BOXへの転送に成功しました。';
+    }else{
+        $reresult_msg = 'BOXへの転送に失敗しました。';
+    }
+    $error_msg = '';
+    return view('box.index', compact( 'result_msg', 'error_msg' ));
 });
 Route::get('box/oauth', function() {
     return Box::connect();
