@@ -52,7 +52,7 @@ Route::get( 'box', function() {
     $result = Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
-    $entries = json_decode($result['entries'], true, 1 );
+    $entries = json_decode($result['entries'], true, 0 );
     if(isset($entries['sequence_id'])){
         $reresult_msg = 'BOXへの転送に成功しました。';
     }else{
