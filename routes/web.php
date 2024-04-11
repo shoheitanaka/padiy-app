@@ -59,7 +59,7 @@ Route::get( 'box', function() {
     }
     $error_msg = '';*/
 //    return view('box.index', compact( 'result_msg', 'error_msg' ));
-    return $result['entries'];
+    return $result['entries']['item_status'];
 });
 Route::get('box/oauth', function() {
     return Box::connect();
