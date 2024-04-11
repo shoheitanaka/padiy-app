@@ -52,15 +52,15 @@ Route::get( 'box', function() {
     $result = Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
-/*    $entries = json_decode($result['entries'], true );
+    $entries = json_decode($result['entries'], true, 1 );
     if(isset($entries['sequence_id'])){
         $reresult_msg = 'BOXへの転送に成功しました。';
     }else{
         $reresult_msg = 'BOXへの転送に失敗しました。';
     }
-    $error_msg = '';*/
-//    return view('box.index', compact( 'result_msg', 'error_msg' ));
-    return $result;
+    $error_msg = '';
+    return view('box.index', compact( 'result_msg', 'error_msg' ));
+//    return $result;
 });
 Route::get('box/oauth', function() {
     return Box::connect();
