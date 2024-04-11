@@ -52,12 +52,12 @@ Route::get( 'box', function() {
     $result = Box::files()->uploadRevision( $file_id, $filepath, $name );
 
     //example of getting the authenticated users details
-    if(json_validate($result)){
+/*    if(json_validate($result)){
         $reresult_msg = 'BOXへの転送に成功しました。';
     }else{
         $reresult_msg = 'BOXへの転送に失敗しました。';
     }
-    $error_msg = '';
+    $error_msg = '';*/
 //    return view('box.index', compact( 'result_msg', 'error_msg' ));
     return $result;
 });
