@@ -54,9 +54,9 @@ Route::get( 'box', function() {
     //example of getting the authenticated users details
 //    $entries = json_decode($result['entries'], true, 0 );
     if(isset($result['entries'])){
-        $reresult_msg = 'BOXへの転送に成功しました。';
+        $result_msg = 'BOXへの転送に成功しました。';
     }else{
-        $reresult_msg = 'BOXへの転送に失敗しました。';
+        $result_msg = 'BOXへの転送に失敗しました。';
     }
     $error_msg = '';
     return view('box.index', compact( 'result_msg', 'error_msg' ));
