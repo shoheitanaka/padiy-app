@@ -54,10 +54,10 @@ class CsvImportController extends Controller
                 if ($row !== reset($sheetData)) {
                     $result = DB::table('applications')->where('application_id', $row[0])->update([
                         'paidy_status' => $row[1],
-                        'public_live_key' => 'pk_live_***'.substr( $row[2], -4 ),
-                        'secret_live_key' => 'sk_live_***'.substr( $row[3], -4 ),
-                        'public_test_key' => 'pk_test_***'.substr( $row[4], -4 ),
-                        'secret_test_key' => 'sk_test_***'.substr( $row[5], -4 ),
+                        'public_live_key' => $row[2],
+                        'secret_live_key' => $row[3],
+                        'public_test_key' => $row[4],
+                        'secret_test_key' => $row[5],
                         'updated_at' => Carbon::now()
                     ]);
                     if( !$result ){
