@@ -72,7 +72,6 @@ return [
             //
             'privateKey' => '/home/kusanagi/.ssh/id_rsa',
             'passphrase' => 'AsDf!2#4Qw',
-            'root' => 'home',
 
             // Settings for file / directory permissions...
             'visibility' => 'public', // `private` = 0600, `public` = 0644
