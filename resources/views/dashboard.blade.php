@@ -36,9 +36,9 @@
                 </div>
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg w-50 col">
-<!--                <div class="p-6 text-gray-900">
-                    <a href="/import-csv" class="btn btn-primary">インポート</a>
-                </div>-->
+                <div class="p-6 text-gray-900">
+                    <a href="/sftp-upload" class="btn btn-primary">SFTPアップロード</a>
+                </div>
             </div>
         </div>
     </div>

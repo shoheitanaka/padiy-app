@@ -55,7 +55,29 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+        /*
+        |------------------
+        | SFTP Setting Add 2024/05/21
+        |------------------
+        */
 
+        'sftp' =>[
+            'driver' => 'sftp',
+            'host' => 'sftp.paidy-staging.com',
+
+            // Basic
+            'username' => 'woocommerce',
+    //        'password' => 'env('SFTP_PASSWORD')',
+
+            //
+            'privateKey' => '/home/kusanagi/.ssh/id_rsa',
+            'passphrase' => 'AsDf!2#4Qw',
+
+            // Settings for file / directory permissions...
+            'visibility' => 'public', // `private` = 0600, `public` = 0644
+            'directory_visibility' => 'public', // `private` = 0700, `public` = 0755
+
+        ],
     ],
 
     /*
