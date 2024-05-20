@@ -67,7 +67,7 @@ return [
 
             // Basic
             'username' => 'woocommerce',
-            'password' => '',
+//            'password' => '',
 
             //
             'privateKey' => '/home/kusanagi/.ssh/id_rsa',
@@ -76,6 +76,7 @@ return [
             // Settings for file / directory permissions...
             'visibility' => 'public', // `private` = 0600, `public` = 0644
             'directory_visibility' => 'public', // `private` = 0700, `public` = 0755
+            'useAgent' => true
 
         ],
     ],
