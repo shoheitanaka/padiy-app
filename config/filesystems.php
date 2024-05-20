@@ -76,6 +76,7 @@ return [
             // Settings for file / directory permissions...
             'visibility' => 'public', // `private` = 0600, `public` = 0644
             'directory_visibility' => 'public', // `private` = 0700, `public` = 0755
+            'maxTries' => 4,
             'useAgent' => true
 
         ],
