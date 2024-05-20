@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Log;
 class ApplicationController extends Controller
 {
     public function index() {
-//        return Application::all();
-        Log::info('Index here.');
-        return 'Index';
+        return Application::all();
     }
 
     public function show(Application $application)
@@ -44,7 +42,11 @@ class ApplicationController extends Controller
         }
 
         $latest_app = Application::orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->first();
-        $set_num = substr($latest_app->application_id, 2);
+        if($latest_app){
+            $set_num = substr($latest_app->application_id, 2);
+        }else{
+            $set_num = 1;
+        }
         $set_num = substr($set_num, 0, -1);
         $set_num = (int)$set_num;
         if(is_numeric($set_num))$set_num++;
@@ -74,6 +76,17 @@ class ApplicationController extends Controller
         Log::info('Create application.');
         // Add to Excel file
         $file_url = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
+        $gmv_flag = ($request->gmv_flag === 1) ? '1億円未満' : '1億円以上';
+        $average_flag = ($request->average_flag === 1) ? '5万円未満' : '５万円以上';
+        $survey01 = ($request->survey01 === 1) ? 'はい' : 'いいえ';
+        $survey02 = ($request->survey02 === 1) ? 'はい' : 'いいえ';
+        $survey03 = ($request->survey03 === 1) ? 'はい' : 'いいえ';
+        $survey04 = ($request->survey04 === 1) ? 'はい' : 'いいえ';
+        $survey05 = ($request->survey05 === 1) ? 'はい' : 'いいえ';
+        $survey06 = ($request->survey06 === 1) ? 'はい' : 'いいえ';
+        $survey07 = ($request->survey07 === 1) ? 'はい' : 'いいえ';
+        $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
+        $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
         $reader = IOFactory::createReader("Xlsx");
         $set_excel = $reader->load( $file_url );
         $sheet = $set_excel->getSheetByName('加盟店');
@@ -94,17 +107,17 @@ class ApplicationController extends Controller
         $sheet->setCellValue('H'.$i-1, $request->ceo);
         $sheet->setCellValue('I'.$i-1, $request->ceo_kana);
         $sheet->setCellValue('J'.$i-1, $request->ceo_birthday);
-        $sheet->setCellValue('K'.$i-1, $request->gmv_flag);
-        $sheet->setCellValue('L'.$i-1, $request->average_flag);
-        $sheet->setCellValue('M'.$i-1, $request->survey01);
-        $sheet->setCellValue('N'.$i-1, $request->survey02);
-        $sheet->setCellValue('O'.$i-1, $request->survey03);
-        $sheet->setCellValue('P'.$i-1, $request->survey04);
-        $sheet->setCellValue('Q'.$i-1, $request->survey05);
-        $sheet->setCellValue('R'.$i-1, $request->survey06);
-        $sheet->setCellValue('S'.$i-1, $request->survey07);
-        $sheet->setCellValue('T'.$i-1, $request->survey08);
-        $sheet->setCellValue('U'.$i-1, $request->survey09);
+        $sheet->setCellValue('K'.$i-1, $gmv_flag);
+        $sheet->setCellValue('L'.$i-1, $average_flag);
+        $sheet->setCellValue('M'.$i-1, $survey01);
+        $sheet->setCellValue('N'.$i-1, $survey02);
+        $sheet->setCellValue('O'.$i-1, $survey03);
+        $sheet->setCellValue('P'.$i-1, $survey04);
+        $sheet->setCellValue('Q'.$i-1, $survey05);
+        $sheet->setCellValue('R'.$i-1, $survey06);
+        $sheet->setCellValue('S'.$i-1, $survey07);
+        $sheet->setCellValue('T'.$i-1, $survey08);
+        $sheet->setCellValue('U'.$i-1, $survey09);
 
         $writer = IOFactory::createWriter($set_excel, "Xlsx");;
         $writer->save($file_url);

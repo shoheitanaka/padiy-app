@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\BoxController;
+use App\Http\Controllers\PaidyConnectController;
 use Illuminate\Support\Facades\Route;
 use Dcblogdev\Box\Facades\Box;
 
@@ -37,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('import-csv', [CsvImportController::class,'show'])->name('import-csv.show');
     Route::post('import-csv',  [CsvImportController::class,'import']);
     Route::get('application', [ApplicationController::class, 'index'])->name('application.index');
-//    Route::get('box2', [BoxController::class,'index'])->name('box.show');
+    Route::get('sftp-upload', [PaidyConnectController::class, 'index'])->name('sftp-upload.index');
 });
 
 Route::get( 'box', function() {
