@@ -10,7 +10,8 @@ class PaidyConnectController extends Controller
 {
     public function paidy_sftp_upload() {
         $file = new File( storage_path('box_data').'/woocommerce_merchant_list.xlsx' );
-        if(Storage::disk('sftp')->put('home/woocommerce_merchant_list.xlsx', $file)){
+//        if(Storage::disk('sftp')->put('home/woocommerce_merchant_list.xlsx', $file)){
+        if(Storage::disk('sftp')->exists('woocommerce')){
             Log::debug('The file was successfully transferred to Paidy\'s server.');
             return true;
         }else{
