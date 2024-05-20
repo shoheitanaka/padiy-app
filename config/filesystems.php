@@ -67,7 +67,7 @@ return [
 
             // Basic
             'username' => 'woocommerce',
-    //        'password' => 'env('SFTP_PASSWORD')',
+            'password' => '',
 
             //
             'privateKey' => '/home/kusanagi/.ssh/id_rsa',
