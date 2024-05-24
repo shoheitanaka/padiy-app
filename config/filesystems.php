@@ -70,8 +70,8 @@ return [
 //            'password' => '',
 
             //
-            'privateKey' => '/home/kusanagi/.ssh/id_rsa2',
-            'passphrase' => 'AsDf!2#4Qw',
+            'privateKey' => '/home/kusanagi/.ssh/id_rsa',
+            'passphrase' => 'Qc7S$6adgCk',
 
             // Settings for file / directory permissions...
             'visibility' => 'public', // `private` = 0600, `public` = 0644
