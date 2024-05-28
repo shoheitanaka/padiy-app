@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class PaidyConnectController extends Controller
 {
     public function paidy_sftp_upload() {
-        $file = Storage::disk('local')->get( storage_path('box_data/woocommerce_merchant_list.xlsx') );
-//        $file = file_get_contents( storage_path('box_data/woocommerce_merchant_list.xlsx') );
+//        $file = Storage::disk('local')->get( storage_path('box_data/woocommerce_merchant_list.xlsx') );
+        $file = file_get_contents( storage_path('box_data/woocommerce_merchant_list.xlsx') );
         $result = Storage::disk('sftp')->put('woocommerce/woocommerce_merchant_list.xlsx', $file);
 //        $result = Storage::disk('sftp')->put('woocommerce/list2.txt', 'ABCDEFGHIJK');
         if($result){
