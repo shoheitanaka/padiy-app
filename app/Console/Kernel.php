@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
+            Log::debug('Schedule Start.');
             $update_file = Storage::disk('local')->get( 'public/woocommerce_merchant_list.xlsx' );
             $result = Storage::disk('sftp')->put('woocommerce/woocommerce_merchant_list.xlsx', $update_file);
             if($result){
@@ -22,7 +23,7 @@ class Kernel extends ConsoleKernel
             }else{
                 Log::error('File transfer to Paidy\'s server failed.');
             }
-            })->hourly();
+        })->everyTenMinutes();
     }
 
     /**
