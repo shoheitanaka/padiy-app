@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,7 +14,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $update_file = Storage::disk('local')->get( 'public/woocommerce_merchant_list.xlsx' );
+            $result = Storage::disk('sftp')->put('woocommerce/woocommerce_merchant_list.xlsx', $update_file);
+            if($result){
+                Log::debug('The file was successfully transferred to Paidy\'s server.');
+            }else{
+                Log::error('File transfer to Paidy\'s server failed.');
+            }
+            })->hourly();
     }
 
     /**
