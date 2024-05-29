@@ -10,7 +10,15 @@ class PaidyConnectController extends Controller
 {
     public function paidy_sftp_upload() {
         $update_file = Storage::disk('local')->get( 'public/woocommerce_merchant_list.xlsx' );
-        $disk = Storage::disk('sftp');
+//        $disk = Storage::disk('sftp');
+        $disk = Storage::build([
+            'driver' => 'sftp',
+            'host' => 'sftp.paidy-staging.com',
+            'username' => 'woocommerce',
+            'privateKey' => '/home/kusanagi/.ssh/id_rsa',
+            'passphrase' => 'Qc7S$6adgCk',
+            'useAgent' => true
+        ]);
         $get_files = $disk->files('woocommerce');
         $text = implode(',', $get_files);
         Log::debug($text);
