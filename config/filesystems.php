@@ -70,7 +70,7 @@ return [
 //            'password' => '',
 
             //
-            'privateKey' => '/home/kusanagi/.ssh/id_rsa',
+            'privateKey' => file_get_contents('/home/kusanagi/.ssh/id_rsa'),
             'passphrase' => 'Qc7S$6adgCk',
 
             // Settings for file / directory permissions...
