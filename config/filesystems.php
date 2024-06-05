@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('box_data'),
             'throw' => false,
         ],
 
@@ -63,15 +63,15 @@ return [
 
         'sftp' =>[
             'driver' => 'sftp',
-            'host' => 'sftp.paidy-staging.com',
+            'host' => env('SFTP_HOST'),
 
             // Basic
-            'username' => 'woocommerce',
+            'username' => env('SFTP_USERNAME'),
 //            'password' => '',
 
             //
-            'privateKey' => '/home/kusanagi/.ssh/id_rsa2',
-            'passphrase' => 'Qc7S$6adgCk',
+            'privateKey' => env('SFTP_PRIVATE_KEY'),
+            'passphrase' => env('SFTP_PASSPHRASE'),
 
             // Settings for file / directory permissions...
             'visibility' => 'public', // `private` = 0600, `public` = 0644
