@@ -99,11 +99,11 @@
                         @endif
                     </td>
                     <td>@if($application->created_at != null )
-                        {{$application->created_at->format('Y年n月d日 g:i')}}
+                        {{$application->created_at->format('Y年n月d日 G:i')}}
                         @endisset
                     </td>
                     <td>@isset($application->updated_at)
-                        {{$application->updated_at->format('Y年n月d日 g:i')}}
+                        {{$application->updated_at->format('Y年n月d日 G:i')}}
                         @endisset
                     </td>
                 </tr>
