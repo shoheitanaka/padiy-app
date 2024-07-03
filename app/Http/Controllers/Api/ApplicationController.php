@@ -75,6 +75,7 @@ class ApplicationController extends Controller
         $application = Application::create( $save_app_data );
         Log::info('Create application.');
         // Add to Excel file
+        /*
         $file_url = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
         $gmv_flag = ($request->gmv_flag === 1) ? '1億円未満' : '1億円以上';
         $average_flag = ($request->average_flag === 1) ? '5万円未満' : '５万円以上';
@@ -121,6 +122,48 @@ class ApplicationController extends Controller
 
         $writer = IOFactory::createWriter($set_excel, "Xlsx");;
         $writer->save($file_url);
+        */
+        // Add CSV file
+        $file_url = storage_path('box_data').'/woocommerce_merchant_list.csv';
+        $gmv_flag = ($request->gmv_flag === 1) ? '1億円未満' : '1億円以上';
+        $average_flag = ($request->average_flag === 1) ? '5万円未満' : '５万円以上';
+        $survey01 = ($request->survey01 === 1) ? 'はい' : 'いいえ';
+        $survey02 = ($request->survey02 === 1) ? 'はい' : 'いいえ';
+        $survey03 = ($request->survey03 === 1) ? 'はい' : 'いいえ';
+        $survey04 = ($request->survey04 === 1) ? 'はい' : 'いいえ';
+        $survey05 = ($request->survey05 === 1) ? 'はい' : 'いいえ';
+        $survey06 = ($request->survey06 === 1) ? 'はい' : 'いいえ';
+        $survey07 = ($request->survey07 === 1) ? 'はい' : 'いいえ';
+        $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
+        $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
+        $unitime = time();
+        $csv_data = array(
+            $application_id,
+            date('Y/n/j H:i:s', $unitime),
+            $request->trade_name,
+            $request->site_name,
+            $request->site_url,
+            $request->email,
+            $request->phone,
+            $request->ceo,
+            $request->ceo_kana,
+            $request->ceo_birthday,
+            $gmv_flag,
+            $average_flag,
+            $survey01,
+            $survey02,
+            $survey03,
+            $survey04,
+            $survey05,
+            $survey06,
+            $survey07,
+            $survey08,
+            $survey09
+        );
+        $fp = fopen($file_url, 'a');
+        fputcsv($fp, $csv_data);
+        fclose($fp);
+
         return response()->json($application);
     }
 

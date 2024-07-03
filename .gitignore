@@ -6,6 +6,7 @@
 /public/_pma
 /storage/*.key
 /vendor
+/vendor.bk
 .env
 .env.backup
 .env.production
