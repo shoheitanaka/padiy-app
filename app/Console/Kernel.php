@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
             }else{
                 Log::error('File transfer to Paidy\'s server failed.');
             }
-        })->everyFiveMinutes();
+        })->everySixHours();
     }
 
     /**
