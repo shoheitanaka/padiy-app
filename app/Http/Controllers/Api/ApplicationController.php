@@ -52,6 +52,15 @@ class ApplicationController extends Controller
         if(is_numeric($set_num))$set_num++;
         $set_num = sprintf('%09d', $set_num);
         $application_id = 'WC'.$set_num.'1';
+        $survey01 = ($request->survey01 === 1) ? 'はい' : 'いいえ';
+        $survey02 = ($request->survey02 === 1) ? 'はい' : 'いいえ';
+        $survey03 = ($request->survey03 === 1) ? 'はい' : 'いいえ';
+        $survey04 = ($request->survey04 === 1) ? 'はい' : 'いいえ';
+        $survey05 = ($request->survey05 === 1) ? 'はい' : 'いいえ';
+        $survey06 = ($request->survey06 === 1) ? 'はい' : 'いいえ';
+        $survey07 = ($request->survey07 === 1) ? 'はい' : 'いいえ';
+        $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
+        $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
         $save_app_data = array(
             'application_id' => $application_id,
             'site_id' => $site_id,
@@ -62,15 +71,15 @@ class ApplicationController extends Controller
             'ceo_birthday' => $request->ceo_birthday,
             'gmv_flag' => $request->gmv_flag,
             'average_flag' => $request->average_flag,
-            'survey01' => $request->survey01,
-            'survey02' => $request->survey02,
-            'survey03' => $request->survey03,
-            'survey04' => $request->survey04,
-            'survey05' => $request->survey05,
-            'survey06' => $request->survey06,
-            'survey07' => $request->survey07,
-            'survey08' => $request->survey08,
-            'survey09' => $request->survey09,
+            'survey01' => $survey01,
+            'survey02' => $survey02,
+            'survey03' => $survey03,
+            'survey04' => $survey04,
+            'survey05' => $survey05,
+            'survey06' => $survey06,
+            'survey07' => $survey07,
+            'survey08' => $survey08,
+            'survey09' => $survey09,
         );
         $application = Application::create( $save_app_data );
         Log::info('Create application.');
