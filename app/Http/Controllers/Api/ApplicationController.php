@@ -107,12 +107,19 @@ class ApplicationController extends Controller
 
         // Add CSV file
         $file_url = storage_path('box_data').'/woocommerce_merchant_list.csv';
-        $gmv_flag = ($request->gmv_flag === 1) ? '1億円未満' : '1億円以上';
-        $average_flag = ($request->average_flag === 1) ? '5万円未満' : '５万円以上';
+        $gmv_flag = ($request->gmv_flag == 1) ? '1億円未満' : '1億円以上';
+        $average_flag = ($request->average_flag == 1) ? '5万円未満' : '５万円以上';
+        $survey01 = ($request->survey01 == 1) ? 'はい' : 'いいえ';
+        $survey02 = ($request->survey02 == 1) ? 'はい' : 'いいえ';
+        $survey03 = ($request->survey03 == 1) ? 'はい' : 'いいえ';
+        $survey04 = ($request->survey04 == 1) ? 'はい' : 'いいえ';
+        $survey05 = ($request->survey05 == 1) ? 'はい' : 'いいえ';
+        $survey06 = ($request->survey06 == 1) ? 'はい' : 'いいえ';
+        $survey07 = ($request->survey07 == 1) ? 'はい' : 'いいえ';
+        $survey08 = ($request->survey08 == 1) ? 'はい' : 'いいえ';
+        $survey09 = ($request->survey09 == 1) ? 'はい' : 'いいえ';
         $unitime = time();
 
-        $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
-        $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
         $csv_data = array(
             $application_id,// 申込番号
             date('Y/n/j H:i:s', $unitime),// 申込日時
@@ -167,7 +174,13 @@ class ApplicationController extends Controller
             $request->survey06,// JCAアンケート14
             $request->survey07,// JCAアンケート入力欄02
         );
-        $fp = fopen($file_url, 'a');
+        if(file_exists($file_url)){
+            $fp = fopen($file_url, 'a');
+        }else{
+            $fp = fopen($file_url, 'w');
+            fwrite($fp, "\xEF\xBB\xBF");
+            fputcsv($fp, array("登録番号","申込日時","商号/屋号","貴社のECサイト名","貴社のECサイトURL","Paidy登録用メールアドレス","ご担当窓口電話番号","代表者（姓名）","代表者カナ（セイメイ）","代表者生年月日（西暦）","年間流通総額","ご注文あたりの平均購入額","セキュリティアンケートQ1","セキュリティアンケートQ2","セキュリティアンケートQ3","セキュリティアンケートQ4","セキュリティアンケートQ5","セキュリティアンケートQ6","セキュリティアンケートQ7","セキュリティアンケートQ8","セキュリティアンケートQ9","法人/個人事業主","法人番号","商号/屋号（カナ）","登記簿住所・郵便番号","登記簿住所・住所","所在地・郵便番号","所在地・住所","商材","商材(その他の場合)","販売方法","特商法URL","プライバシーポリシーURL"));
+        }
         fputcsv($fp, $csv_data);
         fclose($fp);
 
