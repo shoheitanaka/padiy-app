@@ -17,6 +17,12 @@ class ApplicationController extends Controller
         $updated_until = $request->input('updated_until');
 
         $query = Application::query();
+        $query->select(
+            'applications.*',
+            'sites.site_name',
+            'sites.site_url',
+            'applications.updated_at as application_updated_at'
+        );
         $query->leftjoin('sites', function ($query) use ($request) {
             $query->on('applications.site_id', '=', 'sites.id');
             });
