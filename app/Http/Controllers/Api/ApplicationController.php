@@ -28,7 +28,7 @@ class ApplicationController extends Controller
         $find_site = Site::where( 'site_url', $request->site_url )->first();
         if($find_site){
             $site_id = $find_site->id;
-            Log::info('Check Site_id:'.$site_id);
+            Log::info('Check exist Site_id:'.$site_id);
         }else{
             $save_site_data = array(
                 'site_name' => $request->site_name,
@@ -38,7 +38,7 @@ class ApplicationController extends Controller
             );
             $this_site = Site::create($save_site_data);
             $site_id = $this_site->id;
-            Log::info('Check Site_id:'.$site_id);
+            Log::info('Create Site_id:'.$site_id);
         }
 
         $latest_app = Application::orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->first();
@@ -52,13 +52,6 @@ class ApplicationController extends Controller
         if(is_numeric($set_num))$set_num++;
         $set_num = sprintf('%09d', $set_num);
         $application_id = 'WC'.$set_num.'1';
-        $survey01 = ($request->survey01 === 1) ? 'はい' : 'いいえ';
-        $survey02 = ($request->survey02 === 1) ? 'はい' : 'いいえ';
-        $survey03 = ($request->survey03 === 1) ? 'はい' : 'いいえ';
-        $survey04 = ($request->survey04 === 1) ? 'はい' : 'いいえ';
-        $survey05 = ($request->survey05 === 1) ? 'はい' : 'いいえ';
-        $survey06 = ($request->survey06 === 1) ? 'はい' : 'いいえ';
-        $survey07 = ($request->survey07 === 1) ? 'はい' : 'いいえ';
         $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
         $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
         $save_app_data = array(
@@ -71,67 +64,47 @@ class ApplicationController extends Controller
             'ceo_birthday' => $request->ceo_birthday,
             'gmv_flag' => $request->gmv_flag,
             'average_flag' => $request->average_flag,
-            'survey01' => $survey01,
-            'survey02' => $survey02,
-            'survey03' => $survey03,
-            'survey04' => $survey04,
-            'survey05' => $survey05,
-            'survey06' => $survey06,
-            'survey07' => $survey07,
-            'survey08' => $survey08,
-            'survey09' => $survey09,
         );
         $application = Application::create( $save_app_data );
         Log::info('Create application.');
-        // Add to Excel file
-        /*
-        $file_url = storage_path('box_data').'/woocommerce_merchant_list.xlsx';
-        $gmv_flag = ($request->gmv_flag === 1) ? '1億円未満' : '1億円以上';
-        $average_flag = ($request->average_flag === 1) ? '5万円未満' : '５万円以上';
-        $survey01 = ($request->survey01 === 1) ? 'はい' : 'いいえ';
-        $survey02 = ($request->survey02 === 1) ? 'はい' : 'いいえ';
-        $survey03 = ($request->survey03 === 1) ? 'はい' : 'いいえ';
-        $survey04 = ($request->survey04 === 1) ? 'はい' : 'いいえ';
-        $survey05 = ($request->survey05 === 1) ? 'はい' : 'いいえ';
-        $survey06 = ($request->survey06 === 1) ? 'はい' : 'いいえ';
-        $survey07 = ($request->survey07 === 1) ? 'はい' : 'いいえ';
-        $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
-        $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
-        $reader = IOFactory::createReader("Xlsx");
-        $set_excel = $reader->load( $file_url );
-        $sheet = $set_excel->getSheetByName('加盟店');
-        $i = 1;
-        $a_cell = $sheet->getCell('A'.$i)->getValue();
-        while( !empty( $a_cell ) ){
-            $a_cell = $sheet->getCell('A'.$i)->getValue();
-            $i++;
-        }
-        $sheet->setCellValue('A'.$i-1, $application_id);
-        $unitime = time();
-        $sheet->setCellValue('B'.$i-1, date('Y/n/j H:i:s', $unitime));
-        $sheet->setCellValue('C'.$i-1, $request->trade_name);
-        $sheet->setCellValue('D'.$i-1, $request->site_name);
-        $sheet->setCellValue('E'.$i-1, $request->site_url);
-        $sheet->setCellValue('F'.$i-1, $request->email);
-        $sheet->setCellValue('G'.$i-1, $request->phone);
-        $sheet->setCellValue('H'.$i-1, $request->ceo);
-        $sheet->setCellValue('I'.$i-1, $request->ceo_kana);
-        $sheet->setCellValue('J'.$i-1, $request->ceo_birthday);
-        $sheet->setCellValue('K'.$i-1, $gmv_flag);
-        $sheet->setCellValue('L'.$i-1, $average_flag);
-        $sheet->setCellValue('M'.$i-1, $survey01);
-        $sheet->setCellValue('N'.$i-1, $survey02);
-        $sheet->setCellValue('O'.$i-1, $survey03);
-        $sheet->setCellValue('P'.$i-1, $survey04);
-        $sheet->setCellValue('Q'.$i-1, $survey05);
-        $sheet->setCellValue('R'.$i-1, $survey06);
-        $sheet->setCellValue('S'.$i-1, $survey07);
-        $sheet->setCellValue('T'.$i-1, $survey08);
-        $sheet->setCellValue('U'.$i-1, $survey09);
 
-        $writer = IOFactory::createWriter($set_excel, "Xlsx");;
-        $writer->save($file_url);
-        */
+        // Save survey data to application_metas table.
+        $survey_meta_keys = [
+            'survey01' => 'securitySurvey01Radio',
+            'survey02' => 'securitySurvey01Text',
+            'survey03' => 'securitySurvey11Check',
+            'survey04' => 'securitySurvey12Check',
+            'survey05' => 'securitySurvey13Check',
+            'survey06' => 'securitySurvey14Check',
+            'survey07' => 'securitySurvey10Text',
+            'survey08' => 'securitySurvey08Radio',
+            'survey09' => 'securitySurvey09Radio',
+        ];
+        $survey_data = [];
+        for ($i = 1; $i <= 9; $i++) {
+            $survey_key = sprintf('survey%02d', $i);
+            $survey_meta_key = $survey_meta_keys[$survey_key] ?? null;
+            if ($request->has($survey_key)) {
+                $survey_value = $request->$survey_key;
+                $suevey_type = 'string'; // Default type
+                if('1' === $survey_value || '0' === $survey_value) {
+                    $suevey_type = 'boolean';
+                } elseif (is_numeric($survey_value)) {
+                    $suevey_type = 'integer';
+                }
+                $survey_data[] = [
+                    'application_id' => $application->id,
+                    'meta_key' => $survey_meta_key,
+                    'meta_value' => $survey_value,
+                ];
+            }
+        }
+
+        if (!empty($survey_data)) {
+            ApplicationMeta::insert($survey_data);
+            Log::info('Create application metas: ' . count($survey_data) . ' records');
+        }
+
         // Add CSV file
         $file_url = storage_path('box_data').'/woocommerce_merchant_list.csv';
         $gmv_flag = ($request->gmv_flag == 1) ? '1億円未満' : '1億円以上';
@@ -146,28 +119,60 @@ class ApplicationController extends Controller
         $survey08 = ($request->survey08 == 1) ? 'はい' : 'いいえ';
         $survey09 = ($request->survey09 == 1) ? 'はい' : 'いいえ';
         $unitime = time();
+
         $csv_data = array(
-            $application_id,
-            date('Y/n/j H:i:s', $unitime),
-            $request->trade_name,
-            $request->site_name,
-            $request->site_url,
-            $request->email,
-            $request->phone,
-            $request->ceo,
-            $request->ceo_kana,
-            $request->ceo_birthday,
-            $gmv_flag,
-            $average_flag,
-            $survey01,
-            $survey02,
-            $survey03,
-            $survey04,
-            $survey05,
-            $survey06,
-            $survey07,
-            $survey08,
-            $survey09
+            $application_id,// 申込番号
+            date('Y/n/j H:i:s', $unitime),// 申込日時
+            $request->trade_name,// 商号/屋号
+            $request->site_name,// 貴社のECサイト名
+            $request->site_url,// 貴社のECサイトURL
+            $request->email,// Paidy登録用メールアドレス
+            $request->phone,// ご担当窓口電話番号
+            $request->ceo,// 代表者（姓名）
+            $request->ceo_kana,// 代表者カナ（セイメイ）
+            $request->ceo_birthday,// 代表者生年月日（西暦）
+            $gmv_flag,// 年間流通総額
+            $average_flag,// ご注文あたりの平均購入額
+            "",// セキュリティアンケートQ1
+            "",// セキュリティアンケートQ2
+            "",// セキュリティアンケートQ3
+            "",// セキュリティアンケートQ4
+            "",// セキュリティアンケートQ5
+            "",// セキュリティアンケートQ6
+            "",// セキュリティアンケートQ7
+            $survey08,// セキュリティアンケートQ8
+            $survey09,// セキュリティアンケートQ9
+            "",// 法人/個人事業主
+            "",// 法人番号
+            "",// 商号/屋号（カナ）
+            "",// 登記簿住所・郵便番号
+            "",// 登記簿住所・住所
+            "",// 所在地・郵便番号
+            "",// 所在地・住所
+            "",// 商材1
+            "",// 商材2
+            "",// 商材3
+            "",// 商材(その他の場合)
+            "",// 販売方法
+            "",// 特商法URL
+            "",// プライバシーポリシーURL
+            "",// 担当者名
+            $request->survey01,// JCAアンケート01
+            $request->survey02,// JCAアンケート入力欄01
+            "",// JCAアンケート02
+            "",// JCAアンケート03
+            "",// JCAアンケート04
+            "",// JCAアンケート05
+            "",// JCAアンケート06
+            "",// JCAアンケート07
+            "",// JCAアンケート08
+            "",// JCAアンケート09
+            "",// JCAアンケート10
+            $request->survey03,// JCAアンケート11
+            $request->survey04,// JCAアンケート12
+            $request->survey05,// JCAアンケート13
+            $request->survey06,// JCAアンケート14
+            $request->survey07,// JCAアンケート入力欄02
         );
         if(file_exists($file_url)){
             $fp = fopen($file_url, 'a');

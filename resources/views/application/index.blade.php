@@ -100,7 +100,7 @@
                     </td>
                     <td>@if($application->created_at != null )
                         {{$application->created_at->format('Y年n月d日 G:i')}}
-                        @endisset
+                        @endif
                     </td>
                     <td>@isset($application->updated_at)
                         {{$application->updated_at->format('Y年n月d日 G:i')}}
