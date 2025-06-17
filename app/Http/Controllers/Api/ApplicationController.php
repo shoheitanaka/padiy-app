@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use App\Models\ApplicationMeta;
 use App\Models\Site;
 use App\Http\Resources\ApplicationsResource;
 use App\Http\Requests\ApplicationRequest;
