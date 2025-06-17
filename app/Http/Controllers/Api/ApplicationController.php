@@ -95,8 +95,8 @@ class ApplicationController extends Controller
                 }
                 $survey_data[] = [
                     'application_id' => $application->id,
-                    'meta_key' => $survey_meta_key,
-                    'meta_value' => $survey_value,
+                    'key' => $survey_meta_key,
+                    'value' => $survey_value,
                 ];
             }
         }
