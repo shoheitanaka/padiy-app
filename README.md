@@ -68,17 +68,23 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Private Tools
 
 Start Commond
+
 ./vendor/bin/sail up -d
 
 local URL(by .env.APP_URL )
+
 http://localhost
+
 local phpmyadmin
+
 http://localhost:8080/
 
 Update (commit) to the production environment
+
 git pull shoheitanaka main
 
 Cron run
+
 php artisan schedule:run
 
 
@@ -87,7 +93,9 @@ systemctl status crond.service
 cd /home/kusanagi/paidy_artws/padiy-app/storage/
 
 Initial?
+
 cd /home/kusanagi/paidy_artws/padiy-app/
+
 git clone https://github.com/artisanworkshop/padiy-app.git
 
 git fetch artisanworkshop
