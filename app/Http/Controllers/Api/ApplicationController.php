@@ -53,8 +53,6 @@ class ApplicationController extends Controller
         if(is_numeric($set_num))$set_num++;
         $set_num = sprintf('%09d', $set_num);
         $application_id = 'WC'.$set_num.'1';
-        $survey08 = ($request->survey08 === 1) ? 'はい' : 'いいえ';
-        $survey09 = ($request->survey09 === 1) ? 'はい' : 'いいえ';
         $save_app_data = array(
             'application_id' => $application_id,
             'site_id' => $site_id,
@@ -88,7 +86,7 @@ class ApplicationController extends Controller
             if ($request->has($survey_key)) {
                 $survey_value = $request->$survey_key;
                 $suevey_type = 'string'; // Default type
-                if('1' === $survey_value || '0' === $survey_value) {
+                if(1 === $survey_value || 0 === $survey_value) {
                     $suevey_type = 'boolean';
                 } elseif (is_numeric($survey_value)) {
                     $suevey_type = 'integer';
@@ -110,15 +108,19 @@ class ApplicationController extends Controller
         $file_url = storage_path('box_data').'/woocommerce_merchant_list.csv';
         $gmv_flag = ($request->gmv_flag == 1) ? '1億円未満' : '1億円以上';
         $average_flag = ($request->average_flag == 1) ? '5万円未満' : '５万円以上';
-        $survey01 = ($request->survey01 == 1) ? 'はい' : 'いいえ';
-        $survey02 = ($request->survey02 == 1) ? 'はい' : 'いいえ';
+        if($request->survey01 == 'yes'){
+            $survey01 = 'はい';
+        }elseif($request->survey01 == 'no'){
+            $survey01 = 'いいえ';
+        }else{
+            $survey01 = 'わからない';
+        }
         $survey03 = ($request->survey03 == 1) ? 'はい' : 'いいえ';
         $survey04 = ($request->survey04 == 1) ? 'はい' : 'いいえ';
         $survey05 = ($request->survey05 == 1) ? 'はい' : 'いいえ';
         $survey06 = ($request->survey06 == 1) ? 'はい' : 'いいえ';
-        $survey07 = ($request->survey07 == 1) ? 'はい' : 'いいえ';
-        $survey08 = ($request->survey08 == 1) ? 'はい' : 'いいえ';
-        $survey09 = ($request->survey09 == 1) ? 'はい' : 'いいえ';
+        $survey08 = ($request->survey08 == 'yes') ? 'はい' : 'いいえ';
+        $survey09 = ($request->survey09 == 'yes') ? 'はい' : 'いいえ';
         $unitime = time();
 
         $csv_data = array(
@@ -158,7 +160,7 @@ class ApplicationController extends Controller
             "",// 特商法URL
             "",// プライバシーポリシーURL
             "",// 担当者名
-            $request->survey01,// JCAアンケート01
+            $survey01,// JCAアンケート01
             $request->survey02,// JCAアンケート入力欄01
             "",// JCAアンケート02
             "",// JCAアンケート03
@@ -169,10 +171,10 @@ class ApplicationController extends Controller
             "",// JCAアンケート08
             "",// JCAアンケート09
             "",// JCAアンケート10
-            $request->survey03,// JCAアンケート11
-            $request->survey04,// JCAアンケート12
-            $request->survey05,// JCAアンケート13
-            $request->survey06,// JCAアンケート14
+            $survey03,// JCAアンケート11
+            $survey04,// JCAアンケート12
+            $survey05,// JCAアンケート13
+            $survey06,// JCAアンケート14
             $request->survey07,// JCAアンケート入力欄02
         );
         if(file_exists($file_url)){

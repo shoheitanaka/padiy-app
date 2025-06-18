@@ -131,7 +131,12 @@ class CsvImportController extends Controller
                             $encryptedPublicTestKey = base64_encode(openssl_encrypt($row[4], $method, $key, 0, $iv));
                             $encryptedSecretTestKey = base64_encode(openssl_encrypt($row[5], $method, $key, 0, $iv));
 
-                            $response = Http::post( $site->site_url.'wp-json/paidy-receiver/v1/receive/', [
+                            if( "/" === substr($site->site_url, -1)){
+                                $site_url = $site->site_url;
+                            }else{
+                                $site_url = $site->site_url . '/';
+                            }
+                            $response = Http::post( $site_url.'wp-json/paidy-receiver/v1/receive/', [
                                 'application_id' => $row[0],
                                 'paidy_status' => $row[1],
                                 'public_live_key' => $encryptedPublicLiveKey,
