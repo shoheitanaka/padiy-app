@@ -79,8 +79,9 @@ local phpmyadmin
 
 http://localhost:8080/
 
-Update (commit) to the production environment
+Update (commit) to the production environment (Login:kusanagi)
 
+cd /home/kusanagi/paidy_artws/padiy-app/
 git pull shoheitanaka main
 
 Cron run
