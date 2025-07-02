@@ -76,6 +76,9 @@ class CsvImportController extends Controller
             }
         }
         $result_msg = '';
+        $api_success_list = array(); // API送信成功リスト
+        $api_error_list = array();   // API送信失敗リスト
+
         if( empty( $error_msgs ) ){
             foreach ($sheetData as $row) {
                 if ($row !== reset($sheetData)) {
@@ -88,17 +91,15 @@ class CsvImportController extends Controller
                         'updated_at' => Carbon::now()
                     ]);
                     if( !$result ){
-                        $error_msg .= 'データベースに登録が失敗しました。'."\n";
+                        $error_msg .= 'データベースに登録が失敗しました。ID: ' . $row[0] . "\n";
                     }
                 }
             }
 
             if(empty($error_msg)){
-                $result_msg = 'データベースに登録しました。';
                 foreach ($sheetData as $row) {
                     if ($row !== reset($sheetData)) {
                         try {
-
                             // applicationsテーブルからsite_idを取得
                             $application = DB::table('applications')
                                 ->where('application_id', $row[0])
@@ -106,7 +107,10 @@ class CsvImportController extends Controller
                                 ->first();
 
                             if (!$application) {
-                                $error_msg .= 'アプリケーションID: ' . $row[0] . ' が見つかりません。' . "\n";
+                                $api_error_list[] = [
+                                    'application_id' => $row[0],
+                                    'error' => 'アプリケーションIDが見つかりません。'
+                                ];
                                 continue;
                             }
 
@@ -117,7 +121,10 @@ class CsvImportController extends Controller
                                 ->first();
 
                             if (!$site) {
-                                $error_msg .= 'サイトID: ' . $application->site_id . ' が見つかりません。' . "\n";
+                                $api_error_list[] = [
+                                    'application_id' => $row[0],
+                                    'error' => 'サイトID: ' . $application->site_id . ' が見つかりません。'
+                                ];
                                 continue;
                             }
                             // site_hashを使って暗号化キーとIVを生成
@@ -146,16 +153,42 @@ class CsvImportController extends Controller
                                 'updated_at' => Carbon::now()->toDateTimeString()
                             ]);
 
-                            if (!$response->successful()) {
-                                $error_msg .= 'API送信エラー (ID: ' . $row[0] . '): ' . $response->status() . "\n";
+                            if ($response->successful()) {
+                                $api_success_list[] = [
+                                    'application_id' => $row[0],
+                                    'site_url' => $site_url,
+                                    'status' => $response->status()
+                                ];
+                            } else {
+                                $api_error_list[] = [
+                                    'application_id' => $row[0],
+                                    'site_url' => $site_url,
+                                    'error' => 'HTTPステータス: ' . $response->status() . ' - ' . $response->body()
+                                ];
                             }
                         } catch (\Exception $e) {
-                            $error_msg .= 'API送信エラー (ID: ' . $row[0] . '): ' . $e->getMessage() . "\n";
+                            $api_error_list[] = [
+                                'application_id' => $row[0],
+                                'error' => $e->getMessage()
+                            ];
                         }
                     }
                 }
+                // 結果メッセージの生成
+                $total_records = count($sheetData) - 1; // ヘッダー行を除く
+                $success_count = count($api_success_list);
+                $error_count = count($api_error_list);
+
+                if ($success_count > 0 && $error_count == 0) {
+                    $result_msg = "データベースに登録し、全てのAPI送信が成功しました。（{$success_count}件）";
+                } elseif ($success_count > 0 && $error_count > 0) {
+                    $result_msg = "データベースに登録しましたが、一部のAPI送信に失敗しました。（成功: {$success_count}件、失敗: {$error_count}件）";
+                } elseif ($success_count == 0 && $error_count > 0) {
+                    $result_msg = "データベースに登録しましたが、全てのAPI送信に失敗しました。（{$error_count}件）";
+                }
+
             } else {
-                $result_msg = 'データベースに登録しましたが、API送信に失敗しました。';
+                $result_msg = 'データベースへの登録でエラーが発生しました。';
             }
         }else{
             foreach($error_msgs as $key => $msgs){
@@ -165,12 +198,14 @@ class CsvImportController extends Controller
                 }
             }
         }
-        return view('import-csv.show', compact( 'result_msg', 'error_msg' ));
+        return view('import-csv.show', compact( 'result_msg', 'error_msg', 'api_success_list', 'api_error_list' ));
     }
 
     public function show(){
         $result_msg = '';
         $error_msg = '';
-        return view('import-csv.show', compact( 'result_msg', 'error_msg' ));
+        $api_success_list = array();
+        $api_error_list = array();
+        return view('import-csv.show', compact( 'result_msg', 'error_msg', 'api_success_list', 'api_error_list' ));
     }
 }
