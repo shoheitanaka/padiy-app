@@ -69,7 +69,11 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 Start Commond
 
+Start
 ./vendor/bin/sail up -d
+
+End
+./vendor/bin/sail stop
 
 local URL(by .env.APP_URL )
 
