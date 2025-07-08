@@ -104,3 +104,7 @@ cd /home/kusanagi/paidy_artws/padiy-app/
 git clone https://github.com/artisanworkshop/padiy-app.git
 
 git fetch artisanworkshop
+
+## Log
+
+storage/logs/laravel.log
