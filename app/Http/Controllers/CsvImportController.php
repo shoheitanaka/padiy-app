@@ -154,12 +154,22 @@ class CsvImportController extends Controller
                             ]);
 
                             if ($response->successful()) {
+                                $set_result = DB::table('applications')->where('application_id', $row[0])->update([
+                                    'set_status' => 1,
+                                    'updated_at' => Carbon::now()
+                                ]);
+
                                 $api_success_list[] = [
                                     'application_id' => $row[0],
                                     'site_url' => $site_url,
                                     'status' => $response->status()
                                 ];
                             } else {
+                                $set_result = DB::table('applications')->where('application_id', $row[0])->update([
+                                    'set_status' => 0,
+                                    'updated_at' => Carbon::now()
+                                ]);
+
                                 $api_error_list[] = [
                                     'application_id' => $row[0],
                                     'site_url' => $site_url,
