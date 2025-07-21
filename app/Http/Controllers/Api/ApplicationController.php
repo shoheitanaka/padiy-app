@@ -160,6 +160,7 @@ class ApplicationController extends Controller
             "",// 特商法URL
             "",// プライバシーポリシーURL
             "",// 担当者名
+            "",// 調査結果
             $survey01,// JCAアンケート01
             $request->survey02,// JCAアンケート入力欄01
             "",// JCAアンケート02
@@ -219,6 +220,7 @@ class ApplicationController extends Controller
                     "特商法URL",
                     "プライバシーポリシーURL",
                     "担当者名",
+                    "調査結果",
                     "JCAアンケート01",
                     "JCAアンケート入力欄01",
                     "JCAアンケート02",
